@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useState } from 'react'
+import {useNavigate} from 'react-router-dom';
 
-export const PlayerForm = () => {
+
+const PlayerForm = () => {
   
+  const navigate = useNavigate();
+
   const [player, setPlayer] = useState({
     name: "",
     preferredPosition: ""
@@ -35,6 +38,7 @@ export const PlayerForm = () => {
       axios.post('http://localhost:8000/api/players', player)
         .then(res => console.log(res))
         .catch(err => console.log(err))
+      navigate('/api/players')
     }
     else {
       setErrors({
@@ -44,7 +48,9 @@ export const PlayerForm = () => {
     }
   }
 
-
+  const navigateToDashboard = () => {
+    navigate('/api/players')
+  }
 
   return (
     <div>
@@ -60,8 +66,9 @@ export const PlayerForm = () => {
           <label htmlFor='preferredPosition'>Preferred Position: </label>
           <input type="text" className='form-control' name="preferredPosition" id="preferredPosition" onChange={onChangeHandler}/>
         </div>
-        <button className='btn btn-info'>Create Player</button>
+        <button className='btn btn-info mt-2'>Create Player</button>
       </form>
+      <button className="btn btn-secondary mt-2" onClick={navigateToDashboard}>Dashboard</button>
     </div>
   )
 
